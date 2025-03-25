@@ -123,7 +123,7 @@ def convert_element_to_path(elem):
         return polygon_to_path(elem)
     return None
 
-def clean_svg_content(svg_content):
+def clean_svg_content(svg_content, keep_newlines=False):
     """
     Cleans an SVG string by:
       1. Removing everything before the first <svg> tag.
@@ -189,6 +189,17 @@ def clean_svg_content(svg_content):
     # Convert the new SVG tree back to a string.
     new_svg_str = ET.tostring(new_svg, encoding='unicode')
     new_svg_str = re.sub(r'(>)(<)', r'\1\n\2', new_svg_str)  # add line breaks for readability
+    
+     # Convert the new SVG tree back to a string.
+    new_svg_str = ET.tostring(new_svg, encoding='unicode')
+    
+    if keep_newlines:
+        # Add line breaks between tags for readability.
+        new_svg_str = re.sub(r'(>)(<)', r'\1\n\2', new_svg_str)
+    else:
+        # Remove all extraneous whitespace so it's all on one line.
+        new_svg_str = re.sub(r'\s+', ' ', new_svg_str).strip()
+
     return new_svg_str.strip()
 
 def process_svg_file(input_path, output_path):
