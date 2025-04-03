@@ -40,7 +40,7 @@ def process_svg_file(input_path, output_path):
                 modified = True
 
     # Write out the updated SVG file
-    tree.write(output_path, encoding="utf-8", xml_declaration=True)
+    tree.write(output_path, encoding="utf-8", xml_declaration=False)
     if modified:
         print(f"Modified {input_path} -> {output_path}")
     else:
